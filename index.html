@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div class="title">Case Converter</div>
+<textarea id="text"></textarea>
+<button id="upper-case">Upper Case</button>
+<button id="lower-case">Lower Case</button>
+<button id="proper-case">Proper Case</button>
+<button id="sentence-case">Sentence Case</button>
+<button id="save-text-file">Save Text File</button>
+<script>
+
+    document.getElementById("upper-case").addEventListener('click', function () {
+        document.getElementById('text').value = document.getElementById('text').value.toUpperCase().trim();
+
+    });
+
+    document.getElementById("lower-case").addEventListener("click", function () {
+        document.getElementById('text').value =  document.getElementById('text').value.toLowerCase().trim();
+
+    });
+
+    document.getElementById ("proper-case"). addEventListener ("click", function () {
+        let str = document.getElementById("text"). value.toLowerCase().trim();
+        document.getElementById("text"). value = str.split(" ").map(([firstChar,...rest])=>firstChar.toUpperCase()+rest.join("").toLowerCase()).join(" ");
+    });
+
+    let toSentenceCaseButton = document.getElementById('sentence-case');
+    toSentenceCaseButton.addEventListener('click', function () {
+        let sentences = document.getElementById('text').value.toLowerCase().split('. ');
+        let modifiedSentences = [];
+        for (let sentence of sentences) {
+            let modifiedSentence = sentence.charAt(0).toUpperCase().concat(sentence.slice(1)).trim();
+            modifiedSentences.push(modifiedSentence);
+        }
+        document.getElementById('text').value = modifiedSentences.join('. ');
+    });
+    document.getElementById("save-text-file").onclick = function(){
+        var l = document.createElement("a");
+        l.href = "data:text/plain;charset=UTF-8," + document.getElementById("text").value;
+        l.setAttribute("download", "text.txt");
+        l.click();
+    };
+</script>
+</body>
+</html>
